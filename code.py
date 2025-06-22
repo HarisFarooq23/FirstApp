@@ -126,6 +126,58 @@ def set_bg_from_local(image_file):
     .stPlotlyChart {{
         width: 100% !important;
     }}
+    /* Delete button styling */
+    .delete-button {{
+        background: linear-gradient(135deg, #FF0000, #990000) !important;
+        color: white !important;
+        border-radius: 8px !important;
+        font-weight: bold !important;
+        border: none !important;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+        margin-top: 20px !important;
+    }}
+    /* About page styling */
+    .about-card {{
+        background: linear-gradient(135deg, rgba(30, 144, 255, 0.2), rgba(0, 102, 204, 0.2)) !important;
+        border-radius: 15px !important;
+        padding: 25px !important;
+        margin-bottom: 20px !important;
+        border-left: 5px solid #D4AF37 !important;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
+    }}
+    .about-header {{
+        color: #D4AF37 !important;
+        text-align: center !important;
+        margin-bottom: 20px !important;
+        font-size: 2.5rem !important;
+        text-shadow: 1px 1px 3px rgba(0,0,0,0.3) !important;
+    }}
+    .about-subheader {{
+        color: #00BFFF !important;
+        border-bottom: 2px solid #D4AF37 !important;
+        padding-bottom: 5px !important;
+        margin-top: 20px !important;
+    }}
+    .skill-pill {{
+        display: inline-block !important;
+        background: rgba(212, 175, 55, 0.3) !important;
+        color: #D4AF37 !important;
+        padding: 5px 15px !important;
+        border-radius: 20px !important;
+        margin: 5px !important;
+        font-weight: bold !important;
+        border: 1px solid #D4AF37 !important;
+    }}
+    .social-icon {{
+        font-size: 30px !important;
+        margin: 10px !important;
+        color: #00BFFF !important;
+        transition: all 0.3s !important;
+    }}
+    .social-icon:hover {{
+        color: #D4AF37 !important;
+        transform: scale(1.2) !important;
+    }}
     </style>
     """
     st.markdown(css, unsafe_allow_html=True)
@@ -184,6 +236,15 @@ def update_expense(index, date, category, amount, description):
         return True
     return False
 
+# Delete all expenses
+def delete_all_expenses():
+    try:
+        os.remove(CSV_FILE)
+        init_csv()
+        return True
+    except:
+        return False
+
 # Loading Page
 def loading_screen():
     st.markdown("""<h1 style='text-align:center; font-size: 72px;'></h1>""", unsafe_allow_html=True)
@@ -198,6 +259,7 @@ def add_expense():
     if st.button("Add Expense", key="add_expense_button"):
         if save_expense(date, category, amount, description):
             st.success("Expense added successfully!")
+            st.balloons()
 
 # Create colorful Plotly pie chart
 def create_pie_chart(data, title):
@@ -376,6 +438,91 @@ def edit_expense():
     if st.button("Update Expense", key="update_expense_button"):
         if update_expense(index, date, category, amount, description):
             st.success("Expense updated successfully!")
+            st.balloons()
+    
+    # Add delete all button with confirmation
+    st.markdown("---")
+    st.subheader("⚠️ Danger Zone")
+    if st.button("❌ Delete ALL Expenses", key="delete_all_button", help="This will permanently delete all your expense records"):
+        if st.warning("Are you sure you want to delete ALL expenses? This action cannot be undone!"):
+            if delete_all_expenses():
+                st.error("All expenses have been deleted!")
+                st.balloons()
+            else:
+                st.error("Failed to delete expenses. Please try again.")
+
+# About Page
+def about_page():
+    st.balloons()
+    st.markdown('<h1 class="about-header">About Spendr</h1>', unsafe_allow_html=True)
+    st.markdown("""
+    <p style='text-align: center; font-size: 18px; color: #888888;'>
+        Spendr is a personal expense tracking application designed to help you monitor your spending habits 
+        and gain financial awareness. With beautiful visualizations and intuitive controls, managing your 
+        money has never been easier.
+    </p>
+    """, unsafe_allow_html=True)
+    
+    st.markdown('<h2 class="about-subheader">🌍 About the Developer</h2>', unsafe_allow_html=True)
+    
+    # Developer info in columns
+    col1, col2 = st.columns([1, 2])
+    
+    with col1:
+        st.markdown("""
+                    <br><br> 
+        <div style='text-align: center;'>
+            <img src='https://media.licdn.com/dms/image/v2/D4D03AQHnjp96gkwCZA/profile-displayphoto-shrink_400_400/B4DZVRSQG5HIAg-/0/1740825496309?e=1756339200&v=beta&t=zOwgJ-pTDxNpTzLHJ7pzer2RFHtDVd_GhwJKQrMzG4E' 
+                 style='width: 150px; height: 150px; border-radius: 50%; border: 4px solid #D4AF37;'>
+            <h3 style='color:#666666; margin-top: 10px;'>-Haris Farooq</h3>
+            <p style='color: #888888;' > UI/UX Enthusiast</p>
+        </div>
+        """, unsafe_allow_html=True)
+    
+    with col2:
+        st.markdown("""
+        <p style='font-size: 16px; color: #888888;'>
+        <br><br>
+            Hi! I'm Haris Farooq, a student of BS Artificial Intelligence (Batch 34) at GIK Institute. I’m passionate about using technology to solve real-world problems, especially in the fields of AI, data science, and automation. I love taking on creative challenges and constantly seek opportunities to learn and grow.This is my first Streamlit app, and I'm excited to share it as part of my journey into building interactive, user-friendly tools with real-world impact!
+        </p>
+        <p style='font-size: 16px;'>
+            When I'm not coding, you can find me exploring new technologies, contributing to 
+            open-source projects, or enjoying outdoor activities.
+        </p>
+        """, unsafe_allow_html=True)
+    
+    st.markdown('<h2 class="about-subheader">🛠️ Technical Skills</h2>', unsafe_allow_html=True)
+    st.markdown("""
+    <div style='text-align: center;'>
+        <span class='skill-pill'>Python</span>
+        <span class='skill-pill'>Streamlit</span>
+        <span class='skill-pill'>Pandas</span>
+        <span class='skill-pill'>Plotly</span>
+        <span class='skill-pill'>Data Visualization</span>
+        <span class='skill-pill'>Web Development</span>
+        <span class='skill-pill'>UI/UX Design</span>
+        <span class='skill-pill'>Data Analysis</span>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown('<h2 class="about-subheader">🌍 Connect With Me</h2>', unsafe_allow_html=True)
+    st.markdown("""
+    <div style='text-align: center;'>
+        <a href='https://github.com/HarisFarooq23' class='social-icon'>GitHub</a>
+        <a href='https://www.linkedin.com/in/harisfarooq23/' class='social-icon'>LinkedIn</a>
+        
+    </div>
+    """, unsafe_allow_html=True)
+    
+    st.markdown('<h2 class="about-subheader">🌍 Special Thanks</h2>', unsafe_allow_html=True)
+    st.markdown("""
+    <p style='text-align: center; font-size: 16px;color: #888888;'>
+        Thank you for using Spendr! If you enjoy this application, please consider starring 
+        the project on GitHub or sharing it with friends who might find it useful.
+    </p>
+    """, unsafe_allow_html=True)
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # Main App
 init_csv()
@@ -401,7 +548,7 @@ with st.sidebar:
     # Navigation with golden selection effect
     menu = st.radio(
         "Navigation",
-        ["Dashboard", "Add Expense", "View Expenses", "Edit Expenses"],
+        ["Dashboard", "Add Expense", "View Expenses", "Edit Expenses", "About"],
         index=0,
         key="nav"
     )
@@ -424,3 +571,5 @@ elif menu == "View Expenses":
     view_expenses()
 elif menu == "Edit Expenses":
     edit_expense()
+elif menu == "About":
+    about_page()
