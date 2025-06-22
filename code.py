@@ -393,7 +393,7 @@ def view_expenses():
 # Dashboard
 def dashboard():
     # Display the image
-    st.image("pic.png", use_container_width=True)
+    st.image("https://github.com/HarisFarooq23/FirstApp/blob/main/pic.png?raw=true", use_container_width=True)
     
     # Add beautiful golden loading bar
     st.markdown('<div class="gold-loading-bar"></div>', unsafe_allow_html=True)
