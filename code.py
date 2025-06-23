@@ -492,7 +492,8 @@ def about_page():
         """, unsafe_allow_html=True)
     
     st.markdown('<h2 class="about-subheader">🛠️ Technical Skills</h2>', unsafe_allow_html=True)
-    st.markdown("""
+    st.markdown(""" 
+        <br> 
     <div style='text-align: center;'>
         <span class='skill-pill'>Python</span>
         <span class='skill-pill'>Streamlit</span>
@@ -507,6 +508,7 @@ def about_page():
     
     st.markdown('<h2 class="about-subheader">🌍 Connect With Me</h2>', unsafe_allow_html=True)
     st.markdown("""
+        <br> 
     <div style='text-align: center;'>
         <a href='https://github.com/HarisFarooq23' class='social-icon'>GitHub</a>
         <a href='https://www.linkedin.com/in/harisfarooq23/' class='social-icon'>LinkedIn</a>
@@ -516,6 +518,7 @@ def about_page():
     
     st.markdown('<h2 class="about-subheader">🌍 Special Thanks</h2>', unsafe_allow_html=True)
     st.markdown("""
+        <br> 
     <p style='text-align: center; font-size: 16px;color: #888888;'>
         Thank you for using Spendr! If you enjoy this application, please consider starring 
         the project on GitHub or sharing it with friends who might find it useful.
